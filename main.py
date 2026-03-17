@@ -1,32 +1,45 @@
-import math
+# Задание 1
+mult = lambda x, y, z: x * y * z
+print(mult(2, 5, 5))
+print()
 
+# Задание 2
+students_2 = [
+    {'name': 'Jennifer', 'final': 95},
+    {'name': 'David', 'final': 92},
+    {'name': 'Nikolas', 'final': 98}
+]
 
-def calculate_area(figure_type, **kwargs):
-    if figure_type == 'rhombus':
-        d1 = kwargs.get('d1')
-        d2 = kwargs.get('d2')
-        return (d1 * d2) / 2
+# Сортировка по имени (по алфавиту / возрастанию)
+sorted_by_name = sorted(students_2, key=lambda item: item['name'])
+print(sorted_by_name)
 
-    elif figure_type == 'square':
-        a = kwargs.get('a')
-        return a ** 2
+# Сортировка по оценкам (в порядке убывания)
+sorted_by_final_desc = sorted(students_2, key=lambda item: item['final'], reverse=True)
+print(sorted_by_final_desc)
+print()
 
-    elif figure_type == 'trapezoid':
-        a = kwargs.get('a')
-        b = kwargs.get('b')
-        h = kwargs.get('h')
-        return 0.5 * (a + b) * h
+# Задание 3
+students_3 = [
+    {'name': 'Jennifer', 'final': 95},
+    {'name': 'David', 'final': 92},
+    {'name': 'Nikolas', 'final': 98}
+]
 
-    elif figure_type == 'circle':
-        r = kwargs.get('r')
-        return math.pi * (r ** 2)
+max_student = max(students_3, key=lambda item: item['final'])
+print(max_student)
 
-    else:
-        return "invalid data"
+min_student = min(students_3, key=lambda item: item['final'])
+print(min_student)
+print()
 
+# Задание 4
+nums = [3, 5, 7, 3, 9, 5, 7, 2]
 
-print(calculate_area(figure_type='rhombus', d1=10, d2=8))
-print(calculate_area(figure_type='square', a=5))
-print(calculate_area(figure_type='trapezoid', a=12, b=3, h=6))
-print(calculate_area(figure_type='circle', r=18))
-print(calculate_area(figure_type='unknown', a=1, b=2, c=3))
+# Возведение в квадрат
+squares = list(map(lambda x: x ** 2, nums))
+print(squares)
+
+# Возведение в куб
+cubes = list(map(lambda x: x ** 3, nums))
+print(cubes)

@@ -8,21 +8,16 @@ class Parser:
         self.url = url
         self.file_name = file_name
         self.pages = pages
+        self.res = []
 
-    def get_html(self, page):
-        if page == 1:
-            url = self.url
-        else:
-            url = f"{self.url}catalogue/page-{page}.html"
-
+    def get_html(self, url):
         response = requests.get(url)
         response.encoding = "utf-8"
         return response.text
 
-    def get_data(self, html):
-        soup = BeautifulSoup(html, "html.parser")
+    def parsing(self, html):
+        soup = BeautifulSoup(html, "lxml")
         books = soup.find_all("article", class_="product_pod")
-        data = []
 
         for book in books:
             name = book.find("h3").find("a").get("title")
@@ -30,23 +25,19 @@ class Parser:
             availability = book.find("p", class_="instock availability").text.strip()
             link = book.find("h3").find("a").get("href")
 
-            if not link.startswith("catalogue/"):
-                link = "catalogue/" + link
-
-            data.append({
+            self.res.append({
                 "name": name,
                 "price": price,
                 "availability": availability,
-                "url": self.url + link
+                "url": link
             })
 
-        return data
-
-    def write_csv(self, data):
-        with open(self.file_name, "a", encoding="utf-8") as f:
+    def save(self):
+        with open(self.file_name, "w", encoding="utf-8") as f:
             writer = csv.writer(f, delimiter=";", lineterminator="\n")
+            writer.writerow(["name", "price", "availability", "url"])
 
-            for book in data:
+            for book in self.res:
                 writer.writerow([
                     book["name"],
                     book["price"],
@@ -55,20 +46,22 @@ class Parser:
                 ])
 
     def run(self):
-        with open(self.file_name, "w", encoding="utf-8") as f:
-            writer = csv.writer(f, delimiter=";", lineterminator="\n")
-            writer.writerow(["name", "price", "availability", "url"])
-
         for page in range(1, self.pages + 1):
-            html = self.get_html(page)
-            data = self.get_data(html)
-            self.write_csv(data)
+            if page == 1:
+                url = self.url
+            else:
+                url = f"{self.url}catalogue/page-{page}.html"
 
+            html = self.get_html(url)
+            self.parsing(html)
+            print(f"Страница {page} обработана")
+
+        self.save()
         print(f"Данные сохранены в файл {self.file_name}")
 
 
 def main():
-    parser = Parser("https://books.toscrape.com/", "books.csv", 3)
+    parser = Parser("https://books.toscrape.com/", "books.csv", 5)
     parser.run()
 
 

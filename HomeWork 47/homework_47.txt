@@ -1,0 +1,58 @@
+1. С помощью объединения вывести данные о каждом заказчике, для которого определен продавец.
+SELECT k.*, p.*
+FROM Klient k INNER JOIN Prodaves p
+ON k.ID_Pr = p.ID_Pr
+
+2. Вывести имя заказчика и данные о средней цене доставки для него. Если цена доставки больше средней по таблице написать - lot, меньше - few.
+SELECT k.Name_KL, AVG(z.Cena_Dostavki) AS "Средняя доставка", "lot" AS "Оценка"
+FROM Klient k, Zakaz z
+WHERE k.ID_KL = z.ID_KL
+GROUP BY k.Name_KL
+HAVING AVG(z.Cena_Dostavki) > (SELECT AVG(Cena_Dostavki) FROM Zakaz)
+UNION
+SELECT k.Name_KL, AVG(z.Cena_Dostavki) AS "Средняя доставка", "few" AS "Оценка"
+FROM Klient k, Zakaz z
+WHERE k.ID_KL = z.ID_KL
+GROUP BY k.Name_KL
+HAVING AVG(z.Cena_Dostavki) <= (SELECT AVG(Cena_Dostavki) FROM Zakaz)
+
+3. Соедините вместе все таблицы с помощью внешнего объединения.
+SELECT *
+FROM Prodaves p
+LEFT JOIN Klient k ON p.ID_Pr = k.ID_Pr
+LEFT JOIN Zakaz z ON k.ID_KL = z.ID_KL
+
+4. С помощью объединения вывести данные о скидках клиента для каждого продавца.
+SELECT p.Name_Pr, k.Name_KL, k.Discoun
+FROM Prodaves p, Klient k
+WHERE p.ID_Pr = k.ID_Pr
+
+5. Напишите запрос, который выведет все города, в которых живут продавцы и заказчики.
+SELECT City_Pr AS "Город"
+FROM Prodaves
+UNION
+SELECT City_KL
+FROM Klient
+
+6. С помощью объединения вывести все данные о заказчиках и заказах, даже если заказчик не сделал ни одного заказа за указанный период.
+SELECT k.*, z.*
+FROM Klient k
+LEFT JOIN Zakaz z ON k.ID_KL = z.ID_KL
+
+7. Составьте запрос для вывода имен и кодов всех продавцов, в чьих городах есть покупатели, которых они не обслуживают. С помощью оператора в подзапросе.
+SELECT p.Name_Pr, p.ID_Pr
+FROM Prodaves p
+WHERE p.City_Pr IN (
+    SELECT k.City_KL
+    FROM Klient k
+    WHERE k.ID_Pr <> p.ID_Pr
+)
+
+8. Напишите запрос, который выведет все города и имена продавцов и заказчиков, которые живут в Лондоне.
+SELECT City_Pr AS "Город", Name_Pr AS "Имя"
+FROM Prodaves
+WHERE City_Pr = "London"
+UNION
+SELECT City_KL, Name_KL
+FROM Klient
+WHERE City_KL = "London"

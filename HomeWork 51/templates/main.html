@@ -1,0 +1,12 @@
+{% include "header.html" %}
+
+<h1>{{ header }}</h1>
+<p>{{ footer_text }}!!!</p>
+
+<ul>
+{% for product in products %}
+    <li>{{ product.name }} - {{ product.price }} руб.</li>
+{% endfor %}
+</ul>
+
+{% include "footer.html" %}

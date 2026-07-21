@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<p>
+    В каталоге собраны несколько вариантов плюмбуса. Разница между ними не очень
+    большая, потому что сам плюмбус и так универсальный.
+</p>
+
+{% for item in plumbuses %}
+<div class="item">
+    <h2>{{ item.name }}</h2>
+    <p>{{ item.text }}</p>
+    <p>Цена: {{ item.price }}</p>
+</div>
+{% endfor %}
+{% endblock %}

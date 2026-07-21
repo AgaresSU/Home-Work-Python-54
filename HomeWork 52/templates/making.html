@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<p>
+    Процесс изготовления плюмбуса не до конца понятный, но обычно его объясняют
+    примерно так:
+</p>
+
+<ol>
+    {% for step in steps %}
+    <li>{{ step }}</li>
+    {% endfor %}
+</ol>
+{% endblock %}

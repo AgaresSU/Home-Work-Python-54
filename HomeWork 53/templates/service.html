@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<p>
+    Обслуживание нужно, чтобы плюмбус дольше оставался полезным и не терял
+    свой комфортный эффект.
+</p>
+
+<h2>Что входит в сервис</h2>
+<ol>
+    {% for item in services %}
+    <li>{{ item }}</li>
+    {% endfor %}
+</ol>
+{% endblock %}

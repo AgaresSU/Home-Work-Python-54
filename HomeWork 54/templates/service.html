@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+{{ page.text | safe }}
+
+<h2>Что входит в сервис</h2>
+<ol>
+    {% for item in items %}
+    <li>{{ item.title }}</li>
+    {% endfor %}
+</ol>
+{% endblock %}

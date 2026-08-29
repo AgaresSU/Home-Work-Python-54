@@ -1,0 +1,59 @@
+body {
+  background: #eef4e8;
+  margin: 0;
+  padding: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #263226;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  background: #547d58;
+  padding: 18px;
+  margin-top: 0;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #365739;
+}
+
+.item {
+  background: white;
+  border: 1px solid #b6c5aa;
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+.form-contact input,
+.form-contact textarea {
+  width: 100%;
+  max-width: 500px;
+}
+
+.flash {
+  padding: 10px;
+}
+
+.flash.success {
+  border: 1px solid #21DB56;
+  background: #AEFFC5;
+}
+
+.flash.error {
+  border: 1px solid #FF4343;
+  background: #FF9c9c;
+}
